@@ -1,3 +1,5 @@
+'use strict';
+
 var ipc = require('ipc');
 
 ipc.on('params', function(message) {
