@@ -4,6 +4,8 @@ const app = require('app');
 const ipc = require('ipc');
 const BrowserWindow = require('browser-window');
 
+const darwin = process.platform === 'darwin';
+
 require('crash-reporter').start();
 require('electron-debug')();
 
@@ -36,11 +38,15 @@ app.on('ready', function () {
 ipc.on('title-changed', function() {
   if (!mainWindow.isFocused()) {
     mainWindow.flashFrame(true);
+
+    if (darwin) {
+      app.dock.bounce('critical');
+    }
   }
 });
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
+  if (!darwin) {
     app.quit();
   }
 });
