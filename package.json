@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "My astonishing app",
   "license": "MIT",
-  "main": "index.js",
+  "main": "app/index.js",
   "repository": "gfpacheco/trello-desktop",
   "author": {
     "name": "Guilherme Pacheco",
@@ -19,9 +19,9 @@
     "build": "electron-packager . $npm_package_productName --out=dist --ignore=dist --prune --asar --all --version=0.30.0"
   },
   "files": [
-    "index.js",
-    "index.html",
-    "index.css"
+    "app/index.js",
+    "app/index.html",
+    "app/index.css"
   ],
   "keywords": [
     "electron-app"
