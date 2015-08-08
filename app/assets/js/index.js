@@ -14,5 +14,11 @@ ipc.on('params', function(message) {
     require('shell').openExternal(e.url);
   });
 
+  webView.addEventListener('did-finish-load', function(e) {
+    webView.addEventListener('page-title-set', function(event) {
+      ipc.send('title-changed');
+    });
+  });
+
   document.getElementById('container').appendChild(webView);
 });

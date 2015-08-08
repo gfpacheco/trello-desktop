@@ -1,6 +1,7 @@
 'use strict';
 
 const app = require('app');
+const ipc = require('ipc');
 const BrowserWindow = require('browser-window');
 
 require('crash-reporter').start();
@@ -23,9 +24,19 @@ app.on('ready', function () {
     }));
   });
 
+  mainWindow.on('focus', function () {
+    mainWindow.flashFrame(false);
+  });
+
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+});
+
+ipc.on('title-changed', function() {
+  if (!mainWindow.isFocused()) {
+    mainWindow.flashFrame(true);
+  }
 });
 
 app.on('window-all-closed', function () {
