@@ -2,6 +2,7 @@
 
 const app = require('app');
 const ipc = require('ipc');
+const five = require('johnny-five');
 const BrowserWindow = require('browser-window');
 
 const darwin = process.platform === 'darwin';
@@ -10,8 +11,14 @@ require('crash-reporter').start();
 require('electron-debug')();
 
 let mainWindow;
+let board = new five.Board();
+let led;
 
 app.on('ready', function () {
+  board.on('ready', function() {
+    led = new five.Led(13);
+  });
+
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -28,6 +35,10 @@ app.on('ready', function () {
 
   mainWindow.on('focus', function () {
     mainWindow.flashFrame(false);
+    if (led) {
+      led.stop();
+      led.off();
+    }
   });
 
   mainWindow.on('closed', function() {
@@ -38,6 +49,9 @@ app.on('ready', function () {
 ipc.on('title-changed', function() {
   if (!mainWindow.isFocused()) {
     mainWindow.flashFrame(true);
+    if (led) {
+      led.blink();
+    }
 
     if (darwin) {
       app.dock.bounce('critical');
