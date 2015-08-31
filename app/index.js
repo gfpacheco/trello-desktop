@@ -12,11 +12,17 @@ require('electron-debug')();
 
 let mainWindow;
 let board = new five.Board();
-let led;
+let leds;
 
 app.on('ready', function () {
   board.on('ready', function() {
-    led = new five.Led(13);
+    leds = [];
+    leds.push(new five.Led(3));
+    leds.push(new five.Led(5));
+    leds.push(new five.Led(6));
+    leds.push(new five.Led(9));
+    leds.push(new five.Led(10));
+    leds.push(new five.Led(11));
   });
 
   mainWindow = new BrowserWindow({
@@ -35,9 +41,10 @@ app.on('ready', function () {
 
   mainWindow.on('focus', function () {
     mainWindow.flashFrame(false);
-    if (led) {
-      led.stop();
-      led.off();
+    if (leds) {
+      leds.forEach(function(led) {
+        led.stop().off();
+      });
     }
   });
 
@@ -49,8 +56,10 @@ app.on('ready', function () {
 ipc.on('title-changed', function() {
   if (!mainWindow.isFocused()) {
     mainWindow.flashFrame(true);
-    if (led) {
-      led.blink();
+    if (leds) {
+      leds.forEach(function(led) {
+        led.blink();
+      });
     }
 
     if (darwin) {
