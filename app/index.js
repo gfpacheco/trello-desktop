@@ -58,7 +58,7 @@ ipc.on('title-changed', function() {
     mainWindow.flashFrame(true);
     if (leds) {
       leds.forEach(function(led) {
-        led.blink();
+        led.pulse();
       });
     }
 
