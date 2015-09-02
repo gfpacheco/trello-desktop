@@ -16,13 +16,14 @@ let leds;
 
 app.on('ready', function () {
   board.on('ready', function() {
-    leds = [];
-    leds.push(new five.Led(3));
-    leds.push(new five.Led(5));
-    leds.push(new five.Led(6));
-    leds.push(new five.Led(9));
-    leds.push(new five.Led(10));
-    leds.push(new five.Led(11));
+    leds = [
+      new five.Led(3),
+      new five.Led(5),
+      new five.Led(6),
+      new five.Led(9),
+      new five.Led(10),
+      new five.Led(11)
+    ];
   });
 
   mainWindow = new BrowserWindow({
@@ -58,7 +59,7 @@ ipc.on('title-changed', function() {
     mainWindow.flashFrame(true);
     if (leds) {
       leds.forEach(function(led) {
-        led.pulse();
+        led.blink(500);
       });
     }
 
