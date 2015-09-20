@@ -20,6 +20,7 @@
   },
   "files": [
     "app/index.js",
+    "app/ledServer.js",
     "app/index.html",
     "app/index.css"
   ],
